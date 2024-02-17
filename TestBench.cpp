@@ -6,13 +6,11 @@ Adafruit_ADS1115 ads;
 
 void setup() {
   Serial.begin(9600);
-
-
+  
   if (!ads.begin()) {
-    Serial.println("Failed to initialize ADS.");
     while (1);
   }
-
+Serial.println("Time(s),Current(A),Force(N)");
 }
 
 void loop() {
@@ -23,9 +21,20 @@ void loop() {
 
   results_CS = ads.readADC_Differential_0_1();
   results_LC = ads.readADC_Differential_2_3();
-  Serial.print("Differential: "); Serial.print(results_CS); Serial.print("("); Serial.print(results_CS * multiplier); Serial.println("mV)");
-  Serial.print("Differential: "); Serial.print(results_LC); Serial.print("("); Serial.print(results_LC * multiplier); Serial.println("mV)");
-  float AMPS = (results_CS/12.5);
-  Serial.print("Current: "); Serial.print(AMPS); Serial.println( " A");
-  delay(1000);
+  
+  float AMPS = ((results_CS*multiplier)/12.5);
+  float Newtons = ((results_CS*multiplier));
+  displayInfo(Amps, Newtons);
+  
+}
+
+
+
+void displayInfo(float Current, float Force){
+   Time = millis();
+   Serial.print(Time); Serial.print(",");
+   Serial.print(Current); Serial.print(",");
+   Serial.println(Force); 
+   delay(Sensitivity);
+  
 }
