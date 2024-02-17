@@ -4,6 +4,8 @@
 #define SENSITIVITY 1000
 
 
+void displayInfo(float Current, float Force);
+
 
 
 
