@@ -31,10 +31,10 @@ void loop() {
 
 
 void displayInfo(float Current, float Force){
-   Time = millis();
+   unsigned long Time = millis();
    Serial.print(Time); Serial.print(",");
    Serial.print(Current); Serial.print(",");
    Serial.println(Force); 
-   delay(Sensitivity);
+   delay(SENSITIVITY);
   
 }
