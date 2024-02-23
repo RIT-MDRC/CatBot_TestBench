@@ -1,7 +1,8 @@
 #include <Wire.h> //for I2C
 #include <Adafruit_ADS1X15.h> //Adafruit ads1115 library
-
-int maxWeight = 100; //maximum load cell capacity
+#define EXCITATION_VOLTAGE 5 //Voltage being applied to load cell
+#define LOAD_CELL_CAPACITY 100 //maximum load cell capacity
+#define SENSITIVITY 2 // load cell sensitivity 2mv/V +-10%
 int16_t adcReading; //will store value from adc
 float kg; //will store conversion from adc to kg results 
 Adafruit_ADS1115 ads; //adc object
@@ -33,5 +34,5 @@ void loop(void)
 
 //conversion from adc to kg
 float adcReadingtoKg(int16_t adcReading){
-  return (adcReading * maxWeight)/2;
+  return (adcReading * LOAD_CELL_CAPACITY)/(SENSITIVITY*EXCITATION_VOLTAGE);
 }
