@@ -13,9 +13,10 @@ void setup(void)
   Serial.println("Hello!");
   
   Serial.println("Getting differential reading from AIN0 (P) and AIN1 (N)");
-  Serial.println("ADC Range: +/- 6.144V (1 bit = 3mV)");
+  Serial.println("ADC Range: +/- 4.096V (1 bit = 0.125 mV)");
   ads.begin(); //Initialize the ADC for operation using the default address and I2C bus.
                //default address 0x48
+  ads.setGain(GAIN_ONE);// 1x gain   +/- 4.096V  1 bit = 0.125mV
 }
 
 void loop(void)
@@ -24,8 +25,8 @@ void loop(void)
   kg = adcReadingtoKg(adcReading);
 
   Serial.print("Differential: ");
-  Serial.print(adcReading);
-  Serial.print("(");
+  Serial.print(adcReading * 0.125);
+  Serial.print(" mV (");
   Serial.print(kg);
   Serial.println("kg)");
 
@@ -34,5 +35,5 @@ void loop(void)
 
 //conversion from adc to kg
 float adcReadingtoKg(int16_t adcReading){
-  return (adcReading * LOAD_CELL_CAPACITY)/(SENSITIVITY*EXCITATION_VOLTAGE);
+  return (adcReading * 0.125 * LOAD_CELL_CAPACITY)/(SENSITIVITY*EXCITATION_VOLTAGE);
 }
